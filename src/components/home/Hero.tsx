@@ -234,13 +234,17 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
           <div
             style={{
               width: '100%',
+              maxWidth: '100%',
+              minWidth: 0,
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
               alignItems: 'center',
+              boxSizing: 'border-box',
             }}
           >
             <div
               ref={imageContainerRef}
+              className="hero-image-container"
               style={{
                 width: '100%',
                 maxWidth: '500px',
@@ -250,6 +254,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
                 borderRadius: '16px',
                 backgroundColor: 'transparent',
                 position: 'relative',
+                boxSizing: 'border-box',
               }}
             >
               <img
@@ -277,15 +282,38 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
           .hero-grid {
             grid-template-columns: 1fr !important;
             gap: 2.5rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .hero-grid > div {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
           }
           .hero-eyebrow {
             margin-bottom: 1.25rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .hero-headline-line {
+            width: 100% !important;
+            max-width: 100% !important;
+            word-break: break-word !important;
           }
           .hero-supporting {
             font-size: 1.08rem !important;
             margin-bottom: 2rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .hero-ctas {
+            width: 100% !important;
+            max-width: 100% !important;
           }
           .hero-image-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
             max-height: 480px !important;
             margin-top: 1rem !important;
           }
@@ -295,11 +323,14 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
             flex-direction: column !important;
             align-items: stretch !important;
             gap: 0.85rem !important;
+            width: 100% !important;
           }
           .hero-ctas button {
             width: 100% !important;
+            max-width: 100% !important;
             justify-content: center !important;
             min-height: 54px !important;
+            box-sizing: border-box !important;
           }
         }
       `}</style>

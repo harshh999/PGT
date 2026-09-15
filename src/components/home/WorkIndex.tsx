@@ -212,11 +212,23 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
           to { opacity: 1; transform: scale(1); }
         }
         @media (max-width: 860px) {
+          .work-grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
           .work-index-list-col {
-            grid-column: span 12 !important;
+            grid-column: span 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
           }
           .work-preview-col {
-            grid-column: span 12 !important;
+            grid-column: span 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
           }
         }
       `}</style>
