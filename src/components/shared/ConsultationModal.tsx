@@ -220,7 +220,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+                <div className="consultation-form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
                   <div>
                     <label htmlFor="name" style={{ display: 'block', fontSize: 'var(--font-body-xs)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, color: 'var(--color-ink-secondary)', marginBottom: '0.4rem' }}>
                       Full Name *
@@ -234,6 +234,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                       placeholder="Jane Doe"
                       style={{
                         width: '100%',
+                        boxSizing: 'border-box',
                         padding: '0.8rem 1rem',
                         border: '1px solid var(--border-medium-light)',
                         borderRadius: 'var(--radius-xs)',
@@ -256,6 +257,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({
                       placeholder="jane@domain.com"
                       style={{
                         width: '100%',
+                        boxSizing: 'border-box',
                         padding: '0.8rem 1rem',
                         border: '1px solid var(--border-medium-light)',
                         borderRadius: 'var(--radius-xs)',

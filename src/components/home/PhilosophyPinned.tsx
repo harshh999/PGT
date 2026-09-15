@@ -36,7 +36,7 @@ export const PhilosophyPinned: React.FC = () => {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || window.innerWidth < 860) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({

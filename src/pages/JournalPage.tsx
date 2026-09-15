@@ -126,7 +126,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onSelectArticle }) => 
           </div>
 
           {/* Article Editorial Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 'clamp(2rem, 4vw, 3rem)' }}>
             {filteredArticles.map((article: Article) => (
               <div
                 key={article.id}

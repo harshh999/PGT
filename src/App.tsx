@@ -4,6 +4,7 @@ import { CustomCursor } from './components/shared/CustomCursor';
 import { Navigation } from './components/layout/Navigation';
 import { Footer } from './components/layout/Footer';
 import { ConsultationModal } from './components/shared/ConsultationModal';
+import { MultilingualIntro } from './components/shared/MultilingualIntro';
 
 import { HomePage } from './pages/HomePage';
 import { TheWorkPage } from './pages/TheWorkPage';
@@ -60,6 +61,9 @@ export function App() {
 
   return (
     <div className="pgt-experience-root">
+      {/* Cinematic Multilingual Opening Intro Overlay */}
+      <MultilingualIntro />
+
       {/* Subtle Desktop Cursor Accent */}
       <CustomCursor />
 

@@ -67,29 +67,47 @@ export const TestimonialQuote: React.FC = () => {
   const active = testimonials[currentIdx];
   const padZero = (n: number) => (n < 10 ? `0${n}` : `${n}`);
 
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) handleNext();
+      else handlePrev();
+    }
+    touchStartX.current = null;
+  };
+
   return (
     <section
       className="section"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         backgroundColor: '#E9A3AD',
         color: '#6E232D',
-        paddingTop: 'clamp(5.5rem, 9vh, 8.5rem)',
-        paddingBottom: 'clamp(5rem, 8vh, 7.5rem)',
+        paddingTop: 'clamp(3.5rem, 7vh, 7rem)',
+        paddingBottom: 'clamp(3.5rem, 7vh, 6.5rem)',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
       <div className="container" style={{ maxWidth: '1150px' }}>
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 5.5vh, 4.5rem)' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.75rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 4vh, 3.5rem)' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.5rem' }}>
             <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: '#6E232D', opacity: 0.65, letterSpacing: '0.05em' }}>05</span>
             <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color: '#6E232D', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 600 }}>REFLECTIONS</span>
           </div>
           <h2
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
+              fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
               fontWeight: 400,
               color: '#6E232D',
               lineHeight: 1.2,
@@ -101,7 +119,7 @@ export const TestimonialQuote: React.FC = () => {
         </div>
 
         {/* Testimonial Display Container */}
-        <div style={{ position: 'relative', minHeight: '220px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ position: 'relative', minHeight: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div
             ref={quoteRef}
             style={{
@@ -117,14 +135,15 @@ export const TestimonialQuote: React.FC = () => {
               style={{
                 fontFamily: 'var(--font-display)',
                 fontStyle: 'italic',
-                fontSize: 'clamp(1.85rem, 3.2vw, 3.1rem)',
-                lineHeight: 1.22,
+                fontSize: 'clamp(1.35rem, 4.5vw, 2.8rem)',
+                lineHeight: 1.25,
                 fontWeight: 300,
                 color: '#6E232D',
                 maxWidth: '1000px',
-                margin: '0 auto 2.25rem auto',
+                margin: '0 auto 1.75rem auto',
                 padding: 0,
                 border: 'none',
+                wordBreak: 'break-word',
               }}
             >
               “{active.quote}”
@@ -137,14 +156,14 @@ export const TestimonialQuote: React.FC = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '0.35rem',
-                marginBottom: 'clamp(2.5rem, 4vh, 3.5rem)',
+                marginBottom: 'clamp(2rem, 3.5vh, 3rem)',
               }}
             >
               <span
                 style={{
                   fontFamily: 'var(--font-body)',
                   fontWeight: 600,
-                  fontSize: 'clamp(0.95rem, 1.05vw, 1.05rem)',
+                  fontSize: 'clamp(0.9rem, 1vw, 1.05rem)',
                   color: '#6E232D',
                 }}
               >
@@ -153,7 +172,7 @@ export const TestimonialQuote: React.FC = () => {
               <span
                 style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize: '0.82rem',
+                  fontSize: '0.78rem',
                   color: '#6E232D',
                   opacity: 0.75,
                   textTransform: 'uppercase',
@@ -172,7 +191,8 @@ export const TestimonialQuote: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 'clamp(1.5rem, 3vw, 3rem)',
+            gap: 'clamp(0.75rem, 3vw, 3rem)',
+            flexWrap: 'wrap',
           }}
         >
           <button
@@ -182,16 +202,16 @@ export const TestimonialQuote: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              padding: '0.5rem 0.75rem',
+              padding: '0.5rem 0.6rem',
               minHeight: '44px',
               fontFamily: 'var(--font-body)',
-              fontSize: '0.9rem',
+              fontSize: '0.88rem',
               fontWeight: 500,
               color: '#6E232D',
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.4rem',
+              gap: '0.35rem',
               transition: 'opacity 0.25s ease',
             }}
           >
@@ -204,7 +224,7 @@ export const TestimonialQuote: React.FC = () => {
           <div
             style={{
               fontFamily: 'var(--font-body)',
-              fontSize: '0.92rem',
+              fontSize: '0.88rem',
               letterSpacing: '0.08em',
               userSelect: 'none',
               display: 'inline-flex',
@@ -224,16 +244,16 @@ export const TestimonialQuote: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              padding: '0.5rem 0.75rem',
+              padding: '0.5rem 0.6rem',
               minHeight: '44px',
               fontFamily: 'var(--font-body)',
-              fontSize: '0.9rem',
+              fontSize: '0.88rem',
               fontWeight: 500,
               color: '#6E232D',
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.4rem',
+              gap: '0.35rem',
               transition: 'opacity 0.25s ease',
             }}
           >

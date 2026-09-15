@@ -88,19 +88,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenConsultation }
         borderTop: '1px solid rgba(246, 239, 233, 0.2)',
       }}
     >
-      <div className="container" style={{ paddingLeft: 'clamp(1.5rem, 7vw, 6rem)', paddingRight: 'clamp(1.5rem, 7vw, 6rem)' }}>
+      <div className="container">
         {/* Dominant Closing Statement */}
         <h2
           ref={statementRef}
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.5rem, 5.5vw, 5.25rem)',
+            fontSize: 'clamp(2.1rem, 7.5vw, 5.25rem)',
             lineHeight: 1.0,
             fontWeight: 400,
             color: '#F6EFE9',
             maxWidth: '1050px',
-            marginBottom: 'clamp(4.5rem, 7vh, 6.5rem)',
-            margin: '0 0 clamp(4.5rem, 7vh, 6.5rem) 0',
+            marginBottom: 'clamp(2.5rem, 5vh, 5rem)',
           }}
         >
           Come as you are. Start where you are.

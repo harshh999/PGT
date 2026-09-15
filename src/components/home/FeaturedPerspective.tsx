@@ -54,15 +54,19 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: 'clamp(2rem, 4vw, 4rem)',
+            gap: 'clamp(1.5rem, 4vw, 4rem)',
             alignItems: 'center',
             cursor: 'pointer',
             backgroundColor: 'var(--color-cream-light)',
-            padding: 'clamp(1.5rem, 3.5vw, 3.5rem)',
-            borderRadius: 'var(--radius-xs)',
+            padding: 'clamp(1.25rem, 3.5vw, 3.5rem)',
+            borderRadius: '16px',
             border: '1px solid var(--border-subtle-light)',
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
           }}
+          className="perspective-card"
         >
           {/* Left: Cinematic Essay Imagery */}
           <div
@@ -70,8 +74,9 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
               gridColumn: 'span 6',
               aspectRatio: '16 / 11',
               overflow: 'hidden',
-              borderRadius: '16px',
+              borderRadius: '12px',
               position: 'relative',
+              width: '100%',
             }}
             className="perspective-img-col"
           >
@@ -88,13 +93,13 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
             <div
               style={{
                 position: 'absolute',
-                top: '1rem',
-                left: '1rem',
+                top: '0.85rem',
+                left: '0.85rem',
                 backgroundColor: 'rgba(246, 239, 233, 0.92)',
                 backdropFilter: 'blur(8px)',
-                padding: '0.4rem 0.9rem',
+                padding: '0.35rem 0.8rem',
                 borderRadius: 'var(--radius-pill)',
-                fontSize: '0.75rem',
+                fontSize: '0.72rem',
                 fontWeight: 600,
                 color: 'var(--color-burgundy)',
                 textTransform: 'uppercase',
@@ -111,14 +116,15 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
               gridColumn: 'span 6',
               display: 'flex',
               flexDirection: 'column',
-              gap: '1.5rem',
+              gap: 'clamp(1rem, 2vw, 1.5rem)',
+              width: '100%',
             }}
             className="perspective-text-col"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.82rem', color: 'var(--color-ink-muted)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap', fontSize: '0.82rem', color: 'var(--color-ink-muted)' }}>
               <span>{featured.publishedDate}</span>
               <span>•</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
                 <Clock size={14} />
                 {featured.readingTime}
               </span>
@@ -127,16 +133,18 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
             <h3
               className="font-display"
               style={{
-                fontSize: 'clamp(1.75rem, 2.8vw, 2.5rem)',
+                fontSize: 'clamp(1.45rem, 4.5vw, 2.5rem)',
                 lineHeight: 1.15,
                 fontWeight: 400,
                 color: 'var(--color-ink-primary)',
+                wordBreak: 'break-word',
+                maxWidth: '100%',
               }}
             >
               {featured.title}
             </h3>
 
-            <p className="text-body" style={{ color: 'var(--color-ink-secondary)', fontSize: '1.02rem', lineHeight: 1.7 }}>
+            <p className="text-body" style={{ color: 'var(--color-ink-secondary)', fontSize: 'clamp(0.92rem, 1.1vw, 1.02rem)', lineHeight: 1.65 }}>
               {featured.excerpt}
             </p>
 
@@ -147,17 +155,17 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
                   fontStyle: 'italic',
                   color: 'var(--color-warm-brown)',
                   borderLeft: '2px solid var(--color-warm-brown)',
-                  paddingLeft: '1.25rem',
-                  fontSize: '1rem',
-                  margin: '0.5rem 0',
+                  paddingLeft: '1rem',
+                  fontSize: '0.95rem',
+                  margin: '0.25rem 0',
                 }}
               >
                 "{featured.pullQuote}"
               </p>
             )}
 
-            <div style={{ marginTop: '0.5rem' }}>
-              <span className="btn btn-primary" style={{ padding: '0.85rem 1.8rem', fontSize: '0.85rem' }}>
+            <div style={{ marginTop: '0.25rem' }}>
+              <span className="btn btn-primary" style={{ padding: '0.85rem 1.8rem', fontSize: '0.85rem', maxWidth: '100%' }}>
                 <span>Read the perspective</span>
                 <ArrowUpRight size={16} />
               </span>
@@ -170,6 +178,7 @@ export const FeaturedPerspective: React.FC<FeaturedPerspectiveProps> = ({
         @media (max-width: 860px) {
           .perspective-img-col {
             grid-column: span 12 !important;
+            aspect-ratio: 4 / 3 !important;
           }
           .perspective-text-col {
             grid-column: span 12 !important;

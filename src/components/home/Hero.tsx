@@ -144,13 +144,13 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
             <h1
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.75rem, 5.8vw, 5.6rem)',
+                fontSize: 'clamp(2.35rem, 8.5vw, 5.6rem)',
                 fontWeight: 400,
                 lineHeight: 1.02,
                 letterSpacing: '-0.02em',
                 color: '#886644',
                 maxWidth: '850px',
-                marginBottom: 'clamp(2rem, 3.5vw, 3rem)',
+                marginBottom: 'clamp(1.75rem, 3.5vw, 3rem)',
               }}
             >
               <div className="hero-headline-line">
@@ -271,12 +271,35 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onOpenConsultation })
         </div>
       </div>
 
-      {/* Responsive Stacking */}
+      {/* Responsive Mobile Stacking and Styling */}
       <style>{`
         @media (max-width: 860px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 3.5rem !important;
+            gap: 2.5rem !important;
+          }
+          .hero-eyebrow {
+            margin-bottom: 1.25rem !important;
+          }
+          .hero-supporting {
+            font-size: 1.08rem !important;
+            margin-bottom: 2rem !important;
+          }
+          .hero-image-container {
+            max-height: 480px !important;
+            margin-top: 1rem !important;
+          }
+        }
+        @media (max-width: 580px) {
+          .hero-ctas {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 0.85rem !important;
+          }
+          .hero-ctas button {
+            width: 100% !important;
+            justify-content: center !important;
+            min-height: 54px !important;
           }
         }
       `}</style>

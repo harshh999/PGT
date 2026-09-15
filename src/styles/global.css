@@ -2,6 +2,27 @@
 @import './reset.css';
 @import './typography.css';
 
+/* Base Reset & Overflow Safeguards */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img, svg, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, span, div, button, a, label, input, textarea {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 /* Editorial Layout Container */
 .container {
   width: 100%;
@@ -10,6 +31,7 @@
   margin-right: auto;
   padding-left: var(--gutter-desktop);
   padding-right: var(--gutter-desktop);
+  box-sizing: border-box;
 }
 
 .container-editorial {
@@ -19,6 +41,7 @@
   margin-right: auto;
   padding-left: var(--gutter-desktop);
   padding-right: var(--gutter-desktop);
+  box-sizing: border-box;
 }
 
 .container-reading {
@@ -28,6 +51,7 @@
   margin-right: auto;
   padding-left: var(--gutter-desktop);
   padding-right: var(--gutter-desktop);
+  box-sizing: border-box;
 }
 
 @media (max-width: 1024px) {
@@ -37,10 +61,17 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .container, .container-editorial, .container-reading {
-    padding-left: var(--gutter-mobile);
-    padding-right: var(--gutter-mobile);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 390px) {
+  .container, .container-editorial, .container-reading {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 }
 
