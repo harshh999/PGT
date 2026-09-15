@@ -16,15 +16,17 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
       style={{
         backgroundColor: '#6E232D',
         color: '#F6EFE9',
-        paddingTop: 'clamp(5rem, 8vw, 8rem)',
-        paddingBottom: 'clamp(5rem, 8vw, 8rem)',
+        paddingTop: 'clamp(4.5rem, 8vw, 8rem)',
+        paddingBottom: 'clamp(4.5rem, 8vw, 8rem)',
         borderTop: '1px solid rgba(246, 239, 233, 0.15)',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <div className="container">
+      <div className="container" style={{ width: '100%', boxSizing: 'border-box' }}>
         {/* Section Header */}
         <div
+          className="work-header"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -32,6 +34,7 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
             marginBottom: 'clamp(2.5rem, 5vw, 4.5rem)',
             flexWrap: 'wrap',
             gap: '1.5rem',
+            width: '100%',
           }}
         >
           <div>
@@ -42,7 +45,7 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
             <h2 className="heading-1" style={{ color: '#F6EFE9' }}>The Work</h2>
           </div>
 
-          <button onClick={onExploreAll} className="editorial-link" style={{ fontSize: '0.95rem', color: '#F6EFE9' }}>
+          <button onClick={onExploreAll} className="editorial-link work-overview-btn" style={{ fontSize: '0.95rem', color: '#F6EFE9' }}>
             <span>View complete practice overview</span>
             <ArrowUpRight size={16} />
           </button>
@@ -50,11 +53,15 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
 
         {/* Dynamic Dual-Column Editorial Stage */}
         <div
+          className="work-grid-container"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
             gap: 'clamp(2rem, 5vw, 5rem)',
-            alignItems: 'center',
+            alignItems: 'start',
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
           }}
         >
           {/* Left Column: Numbered Editorial Index */}
@@ -63,6 +70,8 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
               gridColumn: 'span 7',
               display: 'flex',
               flexDirection: 'column',
+              width: '100%',
+              minWidth: 0,
             }}
             className="work-index-list-col"
           >
@@ -71,50 +80,89 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
               return (
                 <div
                   key={service.id}
+                  className="work-service-item"
                   onMouseEnter={() => setActiveIdx(idx)}
                   onClick={() => onSelectService(service.slug)}
                   style={{
                     borderTop: idx === 0 ? '1px solid rgba(246, 239, 233, 0.2)' : 'none',
                     borderBottom: '1px solid rgba(246, 239, 233, 0.2)',
-                    paddingTop: 'clamp(1.75rem, 2.8vw, 2.5rem)',
-                    paddingBottom: 'clamp(1.75rem, 2.8vw, 2.5rem)',
+                    paddingTop: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                    paddingBottom: 'clamp(1.5rem, 2.5vw, 2.5rem)',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                     backgroundColor: isActive ? 'rgba(233, 163, 173, 0.08)' : 'transparent',
                     paddingLeft: isActive ? '1.25rem' : '0.25rem',
+                    paddingRight: '0.5rem',
+                    width: '100%',
+                    boxSizing: 'border-box',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '1.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 'clamp(1rem, 2vw, 2rem)' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem',
+                      width: '100%',
+                      boxSizing: 'border-box',
+                    }}
+                  >
+                    <div
+                      className="work-service-left-group"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        gap: 'clamp(0.85rem, 2vw, 2rem)',
+                        flex: 1,
+                        minWidth: 0,
+                      }}
+                    >
                       <span
                         style={{
                           fontFamily: 'var(--font-body)',
                           fontSize: '0.85rem',
                           fontWeight: 600,
                           color: isActive ? '#E9A3AD' : '#A99886',
+                          flexShrink: 0,
                         }}
                       >
                         {service.order}
                       </span>
-                      <div>
+                      <div
+                        className="work-service-content"
+                        style={{
+                          flex: 1,
+                          minWidth: 0,
+                          maxWidth: '100%',
+                        }}
+                      >
                         <h3
-                          className="font-display"
+                          className="font-display work-service-title"
                           style={{
-                            fontSize: 'clamp(1.75rem, 3.2vw, 2.75rem)',
+                            fontSize: 'clamp(1.6rem, 3.2vw, 2.75rem)',
                             fontWeight: isActive ? 400 : 300,
                             color: isActive ? '#E9A3AD' : '#F6EFE9',
                             transition: 'color 0.25s ease',
+                            margin: 0,
+                            whiteSpace: 'normal',
+                            wordBreak: 'normal',
+                            overflowWrap: 'break-word',
                           }}
                         >
                           {service.title}
                         </h3>
                         <p
+                          className="work-service-desc"
                           style={{
                             fontFamily: 'var(--font-editorial)',
                             fontStyle: 'italic',
-                            fontSize: '1.05rem',
+                            fontSize: '1.02rem',
                             color: '#A99886',
-                            marginTop: '0.25rem',
+                            marginTop: '0.35rem',
+                            marginBottom: 0,
+                            whiteSpace: 'normal',
+                            wordBreak: 'normal',
+                            overflowWrap: 'break-word',
                           }}
                         >
                           {service.shortDescription}
@@ -123,6 +171,7 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
                     </div>
 
                     <div
+                      className="work-service-arrow"
                       style={{
                         width: '2.5rem',
                         height: '2.5rem',
@@ -152,12 +201,15 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
               display: 'flex',
               flexDirection: 'column',
               gap: '1.5rem',
+              width: '100%',
+              minWidth: 0,
             }}
             className="work-preview-col"
           >
             <div
               style={{
                 width: '100%',
+                maxWidth: '100%',
                 aspectRatio: '4 / 5',
                 overflow: 'hidden',
                 borderRadius: '16px',
@@ -175,6 +227,7 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
                   objectFit: 'cover',
                   animation: 'fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                   filter: 'contrast(1.02) saturate(0.95)',
+                  display: 'block',
                 }}
               />
               <div
@@ -193,13 +246,13 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
                 <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-muted-taupe)' }}>
                   Session Structure
                 </span>
-                <p style={{ fontSize: '0.85rem', color: 'var(--color-cream)', marginTop: '0.2rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-cream)', marginTop: '0.2rem', marginBottom: 0 }}>
                   {activeService.format}
                 </p>
               </div>
             </div>
 
-            <p className="text-body" style={{ color: 'var(--color-ink-secondary)', fontSize: '0.95rem' }}>
+            <p className="text-body" style={{ color: 'var(--color-ink-secondary)', fontSize: '0.95rem', margin: 0 }}>
               {activeService.description}
             </p>
           </div>
@@ -212,9 +265,18 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
           to { opacity: 1; transform: scale(1); }
         }
         @media (max-width: 860px) {
+          .work-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1.25rem !important;
+          }
+          .work-overview-btn {
+            margin-top: 0.5rem !important;
+          }
           .work-grid-container {
             grid-template-columns: 1fr !important;
             gap: 2.5rem !important;
+            width: 100% !important;
           }
           .work-index-list-col {
             grid-column: span 1 !important;
@@ -229,6 +291,16 @@ export const WorkIndex: React.FC<WorkIndexProps> = ({ onSelectService, onExplore
             max-width: 100% !important;
             min-width: 0 !important;
             box-sizing: border-box !important;
+            margin-top: 1rem !important;
+          }
+          .work-service-item {
+            padding-left: 0.5rem !important;
+          }
+          .work-service-title {
+            font-size: clamp(1.45rem, 6vw, 2.2rem) !important;
+            word-break: normal !important;
+            overflow-wrap: normal !important;
+            white-space: normal !important;
           }
         }
       `}</style>
