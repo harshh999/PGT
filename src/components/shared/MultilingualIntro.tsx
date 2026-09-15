@@ -10,16 +10,9 @@ export const MultilingualIntro: React.FC = () => {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Check if user has already seen the intro sequence in this session
-    const hasSeen = sessionStorage.getItem('pgt_intro_seen');
-    if (hasSeen === 'true') {
-      setIsDone(true);
-      return;
-    }
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Lock page scroll during intro
+    // Lock page scroll immediately during intro initialization
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     if ((window as any).lenis) {
@@ -27,7 +20,6 @@ export const MultilingualIntro: React.FC = () => {
     }
 
     const finishIntro = () => {
-      sessionStorage.setItem('pgt_intro_seen', 'true');
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       if ((window as any).lenis) {
