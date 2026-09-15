@@ -4,22 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Greeting {
-  text: string;
-  lang: string;
-}
-
-const GREETINGS: Greeting[] = [
-  { text: 'Hello', lang: 'en' },
-  { text: 'Bonjour', lang: 'fr' },
-  { text: 'Hola', lang: 'es' },
-  { text: 'Ciao', lang: 'it' },
-  { text: 'Namaste', lang: 'hi' },
-  { text: 'नमस्ते', lang: 'hi-Deva' },
-  { text: 'こんにちは', lang: 'ja' },
-  { text: 'مرحبا', lang: 'ar' },
-];
-
 export const MultilingualIntro: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
@@ -74,45 +58,39 @@ export const MultilingualIntro: React.FC = () => {
       onComplete: finishIntro,
     });
 
-    // Step 1: Animate first word ("Hello") in
+    // Stage 1: "Welcome." fades and slides gently in (0.7s)
     tl.fromTo(
       textRef.current,
-      { opacity: 0, y: 24 },
+      { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
     );
 
-    // Step 2: Iterate through remaining greetings (indices 1 to 7)
-    GREETINGS.forEach((greeting, idx) => {
-      if (idx === 0) return;
+    // Hold "Welcome." (0.8s)
+    tl.to({}, { duration: 0.8 });
 
-      // Hold previous word
-      tl.to({}, { duration: 0.48 });
-
-      // Animate out previous word
-      tl.to(textRef.current, {
-        opacity: 0,
-        y: -18,
-        duration: 0.35,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          if (textRef.current) {
-            textRef.current.textContent = greeting.text;
-          }
-        },
-      });
-
-      // Animate in new word
-      tl.fromTo(
-        textRef.current,
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.38, ease: 'power2.inOut' }
-      );
+    // Transition: Outgoing "Welcome." (0.55s) -> Incoming "You are safe here." (0.55s)
+    tl.to(textRef.current, {
+      opacity: 0,
+      y: -20,
+      duration: 0.55,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        if (textRef.current) {
+          textRef.current.textContent = 'You are safe here.';
+        }
+      },
     });
 
-    // Step 3: Hold final word ("مرحبا") briefly
-    tl.to({}, { duration: 0.5 });
+    tl.fromTo(
+      textRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.55, ease: 'power3.inOut' }
+    );
 
-    // Step 4: Upward curtain reveal animation
+    // Stage 2: Hold "You are safe here." for visitor to read and feel (1.5s)
+    tl.to({}, { duration: 1.5 });
+
+    // Stage 3: Upward physical curtain reveal (1.15s)
     tl.to(overlayRef.current, {
       yPercent: -100,
       duration: 1.15,
@@ -153,7 +131,7 @@ export const MultilingualIntro: React.FC = () => {
       }}
     >
       <div
-        className="intro-greeting-wrapper"
+        className="intro-text-wrapper"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -169,26 +147,25 @@ export const MultilingualIntro: React.FC = () => {
           ref={textRef}
           style={{
             display: 'inline-block',
-            fontFamily:
-              '"Newsreader", "Cormorant Garamond", "Noto Serif Devanagari", "Noto Sans JP", "Noto Naskh Arabic", Georgia, serif',
+            fontFamily: '"Newsreader", "Cormorant Garamond", Georgia, serif',
             fontWeight: 400,
-            fontSize: 'clamp(52px, 8.5vw, 120px)',
+            fontSize: 'clamp(48px, 8vw, 110px)',
             lineHeight: 0.95,
-            letterSpacing: '-0.025em',
+            letterSpacing: '-0.02em',
             color: '#F6EFE9',
             textAlign: 'center',
             whiteSpace: 'nowrap',
             willChange: 'transform, opacity',
           }}
         >
-          {GREETINGS[0].text}
+          Welcome.
         </span>
       </div>
 
       <style>{`
         @media (max-width: 767px) {
-          .intro-greeting-wrapper span {
-            font-size: clamp(42px, 12vw, 68px) !important;
+          .intro-text-wrapper span {
+            font-size: clamp(42px, 11vw, 68px) !important;
             white-space: normal !important;
             word-break: break-word !important;
           }
