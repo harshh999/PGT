@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const MultilingualIntro: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
@@ -46,51 +46,61 @@ export const MultilingualIntro: React.FC = () => {
       return;
     }
 
-    const tl = gsap.timeline({
-      onComplete: finishIntro,
-    });
+    // Use gsap.context for complete cleanup and zero duplicate timeline state in React StrictMode
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: finishIntro,
+      });
 
-    // Stage 1: "Welcome." fades and slides gently in (0.7s)
-    tl.fromTo(
-      textRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
-    );
+      // Initial state setup for the single text node
+      gsap.set(textRef.current, { opacity: 0, y: 20 });
 
-    // Hold "Welcome." (0.8s)
-    tl.to({}, { duration: 0.8 });
+      // Step 1: "Welcome." enters gently (0.7s)
+      tl.to(textRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+      });
 
-    // Transition: Outgoing "Welcome." (0.55s) -> Incoming "You are safe here." (0.55s)
-    tl.to(textRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.55,
-      ease: 'power3.inOut',
-      onComplete: () => {
-        if (textRef.current) {
-          textRef.current.textContent = 'You are safe here.';
-        }
-      },
-    });
+      // Hold "Welcome." (1.0s)
+      tl.to({}, { duration: 1.0 });
 
-    tl.fromTo(
-      textRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.55, ease: 'power3.inOut' }
-    );
+      // Step 2: "Welcome." fades out and moves upward (0.4s)
+      tl.to(textRef.current, {
+        opacity: 0,
+        y: -18,
+        duration: 0.4,
+        ease: 'power2.in',
+        onComplete: () => {
+          if (textRef.current) {
+            textRef.current.textContent = 'You are safe here.';
+            gsap.set(textRef.current, { opacity: 0, y: 18 });
+          }
+        },
+      });
 
-    // Stage 2: Hold "You are safe here." for visitor to read and feel (1.5s)
-    tl.to({}, { duration: 1.5 });
+      // Step 3: "You are safe here." enters from below into center (0.5s)
+      tl.to(textRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out',
+      });
 
-    // Stage 3: Upward physical curtain reveal (1.15s)
-    tl.to(overlayRef.current, {
-      yPercent: -100,
-      duration: 1.15,
-      ease: 'power4.inOut',
-    });
+      // Hold "You are safe here." (1.5s)
+      tl.to({}, { duration: 1.5 });
+
+      // Step 4: Upward physical maroon curtain reveal (1.15s)
+      tl.to(overlayRef.current, {
+        yPercent: -100,
+        duration: 1.15,
+        ease: 'power4.inOut',
+      });
+    }, overlayRef);
 
     return () => {
-      tl.kill();
+      ctx.revert();
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
@@ -103,16 +113,17 @@ export const MultilingualIntro: React.FC = () => {
   return (
     <div
       ref={overlayRef}
+      className="pgt-intro"
       role="presentation"
       aria-hidden="true"
       style={{
         position: 'fixed',
         inset: 0,
-        width: '100vw',
+        width: '100%',
         height: '100svh',
         backgroundColor: '#6E232D',
         color: '#F6EFE9',
-        zIndex: 999999,
+        zIndex: 99999,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -122,41 +133,32 @@ export const MultilingualIntro: React.FC = () => {
         WebkitUserSelect: 'none',
       }}
     >
-      <div
-        className="intro-text-wrapper"
+      <p
+        ref={textRef}
+        className="pgt-intro-text"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          color: '#F6EFE9',
+          fontFamily: '"Newsreader", "Cormorant Garamond", Georgia, serif',
+          fontWeight: 400,
+          textAlign: 'center',
+          fontSize: 'clamp(46px, 8vw, 110px)',
+          lineHeight: 0.98,
+          letterSpacing: '-0.02em',
+          margin: 0,
+          padding: '0 24px',
           width: '100%',
           maxWidth: '100%',
-          padding: '0 24px',
           boxSizing: 'border-box',
-          textAlign: 'center',
+          whiteSpace: 'nowrap',
+          willChange: 'transform, opacity',
         }}
       >
-        <span
-          ref={textRef}
-          style={{
-            display: 'inline-block',
-            fontFamily: '"Newsreader", "Cormorant Garamond", Georgia, serif',
-            fontWeight: 400,
-            fontSize: 'clamp(48px, 8vw, 110px)',
-            lineHeight: 0.95,
-            letterSpacing: '-0.02em',
-            color: '#F6EFE9',
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-            willChange: 'transform, opacity',
-          }}
-        >
-          Welcome.
-        </span>
-      </div>
+        Welcome.
+      </p>
 
       <style>{`
         @media (max-width: 767px) {
-          .intro-text-wrapper span {
+          .pgt-intro-text {
             font-size: clamp(42px, 11vw, 68px) !important;
             white-space: normal !important;
             word-break: break-word !important;
